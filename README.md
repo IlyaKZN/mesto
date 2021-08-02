@@ -4,4 +4,4 @@
 
 В разработке данного сайта были применены технологии HTML5 CSS и JavaScript.
 
-Ссылка на репозиторий : https://ilyakzn.github.io/mesto-project/
+Ссылка на репозиторий : https://ilyakzn.github.io/mesto/
