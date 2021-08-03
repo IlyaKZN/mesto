@@ -7,86 +7,60 @@ const closeButtonEdit = document.getElementById('closeEditPopup');
 const closeButtonAdd = document.getElementById('closeAddPopup');
 const likeButton = document.querySelector('.gallery__button-like');
 const galleryList = document.querySelector('.gallery__list');
-const formElement = editPopup.querySelector('.profile-form');
-const nameInput = formElement.querySelector('.popup__nameInput');
-const jobInput = formElement.querySelector('.popup__jobInput');
+const editForm = editPopup.querySelector('.popup__form');
+const nameInput = editForm.querySelector('.popup__nameInput');
+const jobInput = editForm.querySelector('.popup__jobInput');
 const galleryTemplate = document.querySelector('#gallery').content;
-const addForm = addPopup.querySelector('.profile-form');
+const addForm = addPopup.querySelector('.popup__form');
+const closeBtns = document.querySelectorAll('.popup__close-button');
 
-
-const initialCards = [
-  {
-    name: 'Гора Эльбрус',
-    link: './images/Elbrus.jpg'
-  },
-  {
-    name: 'Заповедник Столбы',
-    link: './images/ZapStolbu.jpg'
-  },
-  {
-    name: 'Озеро Байкал',
-    link: './images/Ozero-Bajkal.jpg'
-  },
-  {
-    name: 'Озеро Кезеной-ам',
-    link: './images/OzKezenoi-am.jpg'
-  },
-  {
-    name: 'Ласточкино гнездо',
-    link: './images/LastGnezdo.jpg'
-  },
-  {
-    name: 'Чарские пески',
-    link: './images/ZharskiePeski.jpg'
-  }
-];
 
 //Функция отрытия попапа
-function openPopup (popup, src, subline,) {
-  popup.classList.add('popup_opened')
-  if (popup === editPopup) {
-    let name = editPopup.querySelector('input[name=name]');
-    name.value = document.querySelector('.profile__name').textContent;
-    let subline = editPopup.querySelector('input[name=subline]');
-    subline.value = document.querySelector('.profile__subline').textContent;
-  }
-  if (popup === imgPopup) {
-    imgPopup.querySelector('.popup__img').setAttribute('src', src);
-    imgPopup.querySelector('.popup__img').setAttribute('alt', subline);
-    imgPopup.querySelector('.popup__subtitle').textContent = subline;
-  }
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
+}
+
+//Открытие попапа с изображением
+function handlePreviewPicture(data) {
+  imgPopup.querySelector('.popup__img').setAttribute('src', data.link);
+  imgPopup.querySelector('.popup__img').setAttribute('alt', data.name);
+  imgPopup.querySelector('.popup__subtitle').textContent = data.name;
+  imgPopup.classList.add('popup_opened');
 }
 
 //Установка слушателей на кнопки открытия попапов
 addButton.addEventListener('click', function () {
   openPopup(addPopup);
 });
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', () => {
+  let name = editPopup.querySelector('input[name=name]');
+  name.value = document.querySelector('.profile__name').textContent;
+  let subline = editPopup.querySelector('input[name=subline]');
+  subline.value = document.querySelector('.profile__subline').textContent;
   openPopup(editPopup);
 });
 
 
 
 //Функция закрытия попапа
-const closeBtns = document.querySelectorAll('.popup__close-button');
-for (i = 0; i < closeBtns.length; i++) {
-  closeBtns[i].addEventListener('click', (evt) => closePopup(evt.target));
-}
+closeBtns.forEach((closeButton) => {
+  closeButton.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')));
+});
 function closePopup (popup) {
-  popup.closest('.popup').classList.remove('popup_opened')
-}
+  popup.classList.remove('popup_opened');
+};
 
 
 //Функциональность кнопки "Сохранить"
-function formSubmitHandler (evt) {
+function handleProfileFormSubmit (evt) {
   evt.preventDefault();
   const profileName = document.querySelector('.profile__name');
   const profileSubline = document.querySelector('.profile__subline');
   profileName.textContent = nameInput.value;
   profileSubline.textContent = jobInput.value;
-  evt.target.closest('.popup').classList.remove('popup_opened')
-}
-formElement.addEventListener('submit', formSubmitHandler);
+  evt.target.closest('.popup').classList.remove('popup_opened');
+};
+editForm.addEventListener('submit', handleProfileFormSubmit);
 
 //Функция создания карточки
 function createCard(cardData) {
@@ -97,7 +71,7 @@ function createCard(cardData) {
   elementImage.setAttribute('src', cardData.link);
   elementImage.setAttribute('alt', cardData.name);
   elementImage.addEventListener('click', () =>
-    openPopup(imgPopup, cardData.link, cardData.name)
+    handlePreviewPicture(cardData)
   );
   card.querySelector('.gallery__button-like').addEventListener('click',
   function(evt) {
@@ -107,26 +81,27 @@ function createCard(cardData) {
   function(evt1) {
     evt1.target.closest('li').remove();
   });
-  return card
+  return card;
 }
 
 //Функция добавления карточки на страницу
 function addCard (cardData, cardContainer) {
   const card = createCard(cardData);
   cardContainer.prepend(card);
-}
+};
 
 //Фунция добавления карточки пользователя
 addForm.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  closePopup(evt.target);
+  closePopup(evt.target.closest('.popup'));
   addCard({
     name: addForm.querySelector('[name="name"]').value,
     link: addForm.querySelector('[name="subline"]').value
   }, galleryList);
-})
+  addForm.reset();
+});
 
 //Карточки из коробки
 initialCards.forEach ((item) => {
-  addCard(item, galleryList)
-})
+  addCard(item, galleryList);
+});

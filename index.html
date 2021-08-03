@@ -13,13 +13,13 @@
   </header>
   <main class="content">
     <section class="profile content__profile">
-      <img class="profile__image" src="./images/kusto.png" alt="Фото Жака Кусто">
+      <img class="profile__image" src="./images/kusto.png" alt="Аватар пользователя">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button" type="button"></button>
+        <button class="profile__edit-button" type="button" aria-label="Кнопка редактирования профиля"></button>
         <p class="profile__subline">Исследователь океана</p>
       </div>
-      <button class="profile__add-button" type="button"></button>
+      <button class="profile__add-button" type="button" aria-label="Кнопка добавления новой карточки"></button>
     </section>
     <section class="gallery content__gallery">
       <ul class="gallery__list">
@@ -32,12 +32,12 @@
 
   <div class="popup" id='editPopup'>
     <div class="popup__container">
-      <button class="popup__close-button" id='closeEditPopup' type="button"></button>
+      <button class="popup__close-button" id='closeEditPopup' type="button" aria-label="Кнопка закрытия"></button>
       <div class="popup__content">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="profile-form" class="profile-form">
-          <input class="popup__field-text popup__nameInput" name="name" type="text">
-          <input class="popup__field-text popup__jobInput" name="subline" type="text">
+        <form name="edit-form" class="popup__form">
+          <input class="popup__field-text popup__nameInput" name="name" type="text" required>
+          <input class="popup__field-text popup__jobInput" name="subline" type="text" required>
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
       </div>
@@ -46,12 +46,12 @@
 
   <div class="popup" id='addPopup'>
     <div class="popup__container">
-      <button class="popup__close-button" id='closeAddPopup' type="button"></button>
+      <button class="popup__close-button" id='closeAddPopup' type="button" aria-label="Кнопка закрытия"></button>
       <div class="popup__content">
         <h2 class="popup__title">Новое место</h2>
-        <form name="profile-form" class="profile-form">
-          <input class="popup__field-text popup__field-text_place_newPlace" name="name" type="text" value="Название">
-          <input class="popup__field-text popup__field-text_place_newPlace" name="subline" type="text" value="Ссылка на картинку">
+        <form name="add-form" class="popup__form">
+          <input class="popup__field-text popup__field-text_place_newPlace" name="name" type="text" placeholder="Название" required>
+          <input class="popup__field-text popup__field-text_place_newPlace" name="subline" type="url" placeholder="Ссылка на картинку" required>
           <button class="popup__save-button" type="submit">Создать</button>
         </form>
       </div>
@@ -61,7 +61,7 @@
   <div class="popup popup_type_img" id='imgPopup'>
     <div class="popup__zone">
       <img class="popup__img" src="#" alt="">
-      <button class="popup__close-button" type="button"></button>
+      <button class="popup__close-button" type="button" aria-label="Кнопка закрытия"></button>
       <p class="popup__subtitle"></p>
     </div>
   </div>
@@ -69,14 +69,16 @@
   <template id="gallery">
     <li class="gallery__item">
       <img class="gallery__img">
-      <button class="gallery__button-delete" type="button"></button>
+      <button class="gallery__button-delete" type="button" aria-label="Кнопка удаления"></button>
       <div class="gallery__subline">
         <h2 class="gallery__title"></h2>
-        <button class="gallery__button-like" type="button"></button>
+        <button class="gallery__button-like" type="button" aria-label="Кнопка лайка"></button>
       </div>
     </li>
   </template>
 
+  <script src="./pages/initial-сards.js"></script>
   <script src="./pages/script.js"></script>
+
 </body>
 </html>
