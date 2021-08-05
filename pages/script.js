@@ -13,6 +13,10 @@ const jobInput = editForm.querySelector('.popup__jobInput');
 const galleryTemplate = document.querySelector('#gallery').content;
 const addForm = addPopup.querySelector('.popup__form');
 const closeBtns = document.querySelectorAll('.popup__close-button');
+const profileName = document.querySelector('.profile__name');
+const profileSubline = document.querySelector('.profile__subline');
+const nameCard = addForm.querySelector('[name="name"]');
+const urlCardImg = addForm.querySelector('[name="subline"]');
 
 
 //Функция отрытия попапа
@@ -25,7 +29,7 @@ function handlePreviewPicture(data) {
   imgPopup.querySelector('.popup__img').setAttribute('src', data.link);
   imgPopup.querySelector('.popup__img').setAttribute('alt', data.name);
   imgPopup.querySelector('.popup__subtitle').textContent = data.name;
-  imgPopup.classList.add('popup_opened');
+  openPopup(imgPopup);
 }
 
 //Установка слушателей на кнопки открытия попапов
@@ -33,10 +37,8 @@ addButton.addEventListener('click', function () {
   openPopup(addPopup);
 });
 editButton.addEventListener('click', () => {
-  let name = editPopup.querySelector('input[name=name]');
-  name.value = document.querySelector('.profile__name').textContent;
-  let subline = editPopup.querySelector('input[name=subline]');
-  subline.value = document.querySelector('.profile__subline').textContent;
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileSubline.textContent;
   openPopup(editPopup);
 });
 
@@ -54,11 +56,9 @@ function closePopup (popup) {
 //Функциональность кнопки "Сохранить"
 function handleProfileFormSubmit (evt) {
   evt.preventDefault();
-  const profileName = document.querySelector('.profile__name');
-  const profileSubline = document.querySelector('.profile__subline');
   profileName.textContent = nameInput.value;
   profileSubline.textContent = jobInput.value;
-  evt.target.closest('.popup').classList.remove('popup_opened');
+  closePopup(evt.target.closest('.popup'));
 };
 editForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -91,15 +91,18 @@ function addCard (cardData, cardContainer) {
 };
 
 //Фунция добавления карточки пользователя
-addForm.addEventListener('submit', function(evt) {
+function addUserCard (evt) {
   evt.preventDefault();
   closePopup(evt.target.closest('.popup'));
   addCard({
-    name: addForm.querySelector('[name="name"]').value,
-    link: addForm.querySelector('[name="subline"]').value
+    name: nameCard.value,
+    link: urlCardImg.value
   }, galleryList);
   addForm.reset();
-});
+}
+
+//Добавление слушателя кнопке Добавить
+addForm.addEventListener('submit', (evt) => addUserCard (evt));
 
 //Карточки из коробки
 initialCards.forEach ((item) => {
