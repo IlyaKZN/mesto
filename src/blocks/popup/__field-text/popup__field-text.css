@@ -10,15 +10,5 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
-  margin-bottom: 30px;
 }
 
-.popup__field-text:last-of-type {
-  margin-bottom: 48px;
-}
-
-@media (max-width: 689px) {
-  .popup__field-text:last-of-type {
-    margin-bottom: 45px;
-  }
-}
