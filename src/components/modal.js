@@ -1,6 +1,6 @@
 let activePopup;
 import { editPopup, addPopup, imgPopup, editButton, addButton, addForm, closeBtns, popups, editForm, profileName, profileSubline, nameInput ,jobInput} from './constans.js';
-import {elFormClasses} from '../../pages/index.js';
+import { elFormClasses } from './constans.js';
 import {toggleButtonState, hideInputError} from './validate.js';
 import {addUserCard} from './card.js';
 
@@ -41,6 +41,10 @@ editButton.addEventListener('click', () => {
 //Функция закрытия попапа
 export function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  const form = popup.querySelector('.popup__form')
+  if (form) {
+    popup.querySelector('.popup__form').reset();
+  }
 };
 //(По клику на кнопку)
 closeBtns.forEach((closeButton) => {

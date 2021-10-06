@@ -42,6 +42,8 @@ export function addUserCard (evt) {
 }
 
 //Карточки из коробки
-initialCards.forEach ((item) => {
-  addCard(item, galleryList);
-});
+export function addInitialCards () {
+    initialCards.forEach ((item) => {
+    addCard(item, galleryList);
+  });
+};
